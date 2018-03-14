@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
 
+MAINTAINER "Tanuj Gupta"
+
 RUN apt-get update && apt install -y build-essential libmysqlclient-dev python-dev libapr1-dev libsvn-dev wget libcurl4-nss-dev libsasl2-dev libsasl2-modules zlib1g-dev curl cron zip  && DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends rsync && apt-get clean autoclean && apt-get autoremove -y && rm -rf /var/lib/apt/lists/*
 
 // Either Hardcode the environment variable here or pass these through docker run command using -e flag (ex. "-e ENV_DAG_CONTAINER=test")
