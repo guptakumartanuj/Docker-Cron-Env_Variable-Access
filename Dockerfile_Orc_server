@@ -1,0 +1,24 @@
+#FROM docker-asr-release.dr.corp.adobe.com/asr/python_v2:2.0.0
+FROM docker-asr-release.dr.corp.adobe.com/asr/java:4.8-alpine
+
+RUN apk  add --no-cache  curl 
+
+#RUN apk add --no-cahce crond
+
+RUN apk add --no-cache zip  
+
+RUN apk add --no-cache rsync && rm -rf /var/lib/apt/lists/*
+
+COPY crontab /tmp/crontab
+
+COPY run-crond.sh /run-crond.sh
+
+RUN curl -O https://downloads.rclone.org/rclone-current-linux-amd64.zip && unzip rclone-current-linux-amd64.zip
+
+WORKDIR rclone-v1.39-linux-amd64
+
+RUN chmod 755 /tmp/crontab && chmod 755 /run-crond.sh && mkdir -p /var/log/cron && touch /var/log/cron/cron.log && mkdir -p /tmp/azure/local && mkdir -p /tmp/azure/dag && mkdir -p /root/.config/rclone && cp rclone /usr/bin/ && chown root:root /usr/bin/rclone && chmod 755 /usr/bin/rclone && chmod 755 /root/.config/rclone
+
+COPY rclone.conf /root/.config/rclone/
+
+CMD ["/run-crond.sh"]

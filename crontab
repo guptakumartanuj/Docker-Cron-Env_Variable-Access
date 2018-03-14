@@ -1,0 +1,10 @@
+# In this crontab file, multiple lines are added for the testing purose. Please use them based on your need.
+* * * * *  /script.sh
+* * * * *  /dag_script.sh >> /var/log/cron/cron.log 2>&1
+#* * * * * ( sleep 5 && echo "Hello world" >> /var/log/cron/cron.log 2>&1 )
+#* * * * * while true; do echo "Hello world" >> /var/log/cron/cron.log 2>&1  & sleep 1; done
+#* * * * * sleep 10;  echo "Hello world" >> /var/log/cron/cron.log 2>&1
+#*/1 * * * * rclone sync  remote:test /tmp/azure/local && rsync -avc /tmp/azure/local /tmp/azure/dag
+#* * * * * while true; do rclone sync -v remote:test /tmp/azure/local/dag && rsync -avc /tmp/azure/local/dag/*  /usr/tanuj/dag & sleep 5; done
+#* * * * * while true; do rclone sync -v remote:test /tmp/azure/local/plugin && rsync -avc /tmp/azure/local/plugin/*  /usr/tanuj/plugin & sleep 5; done
+# Don't remove the empty line at the end of this file. It is required to run the cron job
